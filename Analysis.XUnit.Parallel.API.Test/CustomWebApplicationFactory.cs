@@ -42,7 +42,7 @@ namespace Analysis.XUnit.Parallel.API.Test
                 try
                 {
                     // Seed the database with test data.
-                    db.InitializeEmptyContext();
+                    db.InitializeTestDatabase();
                 }
                 catch (Exception ex)
                 {
