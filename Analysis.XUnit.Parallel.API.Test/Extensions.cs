@@ -13,42 +13,35 @@ namespace Analysis.XUnit.Parallel.API.Test
         {
             lock (_customerContextLock)
             {
-                foreach (var item in context.Customers)
-                    context.Remove(item);
+                if (!context.Customers.Any())
+                {
+                    context.Customers.Add(new Customer
+                    {
+                        ID = 1,
+                        FirstName = "John",
+                        LastName = "Doe"
+                    });
 
-                context.SaveChanges();
+                    context.Customers.Add(new Customer
+                    {
+                        ID = 2,
+                        FirstName = "Jane",
+                        LastName = "Doe"
+                    });
+
+                    context.Customers.Add(new Customer
+                    {
+                        ID = 3,
+                        FirstName = "Max",
+                        LastName = "Mustermann"
+                    });
+
+                    context.SaveChanges();
+                }
+                return context;
             }
-
-
-            if (!context.Customers.Any())
-            {
-                context.Customers.Add(new Customer
-                {
-                    ID = 1,
-                    FirstName = "John",
-                    LastName = "Doe"
-                });
-
-                context.Customers.Add(new Customer
-                {
-                     ID = 2,
-                    FirstName = "Jane",
-                    LastName = "Doe"
-                });
-
-                context.Customers.Add(new Customer
-                {
-                     ID = 3,
-                    FirstName = "Max",
-                    LastName = "Mustermann"
-                });
-
-                context.SaveChanges();
-            }
-
-
-            return context;
         }
+
 
         public static async Task<T> DeserializeContent<T>(this HttpResponseMessage message) =>
            await JsonSerializer.DeserializeAsync<T>(await message.Content.ReadAsStreamAsync().ConfigureAwait(false),

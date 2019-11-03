@@ -14,7 +14,6 @@ namespace Analysis.XUnit.Parallel.API.Test
         {
             builder.ConfigureServices(services =>
             {
-
                 var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<CustomerDbContext>));
 
                 if (descriptor != null)
@@ -24,7 +23,6 @@ namespace Analysis.XUnit.Parallel.API.Test
 
                 // Add ApplicationDbContext using an in-memory database for testing.
                 services.AddDbContext<CustomerDbContext>((_, context) => context.UseInMemoryDatabase("InMemoryDbForTesting"));
-
 
                 // Build the service provider.
                 var serviceProvider = services.BuildServiceProvider();
